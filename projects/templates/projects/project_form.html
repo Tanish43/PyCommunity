@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
+            <br>
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <!-- Input:Text -->
+                <div class="form__field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Field for submitting dataset -->
+                <div class="form__field">
+                    <label for="id_dataset">Submit your dataset</label>
+                    <input type="file" name="dataset" id="id_dataset" class="input">
+                    <small class="form-text text-muted">Attach your dataset file here.</small>
+                </div>
+
+                <!-- Field for submitting code -->
+                <div class="form__field">
+                    <label for="id_code">Submit your code</label>
+                    <textarea name="code" class="input">{{ form.instance.code }}</textarea>
+                    <small class="form-text text-muted">Paste your source code.</small>
+                </div>
+
+                <input class="btn btn--sub btn--lg my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
